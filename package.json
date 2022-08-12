@@ -1,15 +1,24 @@
 {
-  "name": "erc20-token-manual",
+  "name": "erc20-token-standard",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devlongs/erc20token-manual.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devlongs/erc20token-manual/issues"
+  },
+  "homepage": "https://github.com/devlongs/erc20token-manual#readme",
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
     "hardhat": "^2.10.1"
   }
 }
