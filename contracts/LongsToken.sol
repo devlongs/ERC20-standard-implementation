@@ -12,12 +12,11 @@ contract LongsToken {
     string public constant name = "LONGS TOKEN";
     string public constant symbol = "LNG";
     uint8 public constant decimals = 18;
+    uint256 totalSupply_;
 
     mapping(address => uint256) balances;
 
     mapping(address => mapping(address => uint256)) allowed;
-
-    uint256 totalSupply_;
 
     constructor(uint256 total) {
         totalSupply_ = total;
@@ -28,44 +27,44 @@ contract LongsToken {
         return totalSupply_;
     }
 
-    function balanceOf(address tokenOwner) public view returns (uint) {
-        return balances[tokenOwner];
+    function balanceOf(address account) public view returns (uint) {
+        return balances[account];
     }
 
-    function transfer(address receiver, uint numTokens) public returns (bool) {
-        require(numTokens <= balances[msg.sender]);
-        balances[msg.sender] -= numTokens;
-        balances[receiver] += numTokens;
-        emit Transfer(msg.sender, receiver, numTokens);
+    function transfer(address to, uint amount) public returns (bool) {
+        require(amount <= balances[msg.sender]);
+        balances[msg.sender] -= amount;
+        balances[to] += amount;
+        emit Transfer(msg.sender, to, amount);
         return true;
     }
 
-    function approve(address delegate, uint numTokens) public returns (bool) {
-        allowed[msg.sender][delegate] = numTokens;
-        emit Approval(msg.sender, delegate, numTokens);
+    function approve(address spender, uint amount) public returns (bool) {
+        allowed[msg.sender][spender] = amount;
+        emit Approval(msg.sender, spender, amount);
         return true;
     }
 
-    function allowance(address owner, address delegate)
+    function allowance(address owner, address spender)
         public
         view
         returns (uint)
     {
-        return allowed[owner][delegate];
+        return allowed[owner][spender];
     }
 
     function transferFrom(
-        address owner,
-        address buyer,
-        uint numTokens
+        address from,
+        address to,
+        uint amount
     ) public returns (bool) {
-        require(numTokens <= balances[owner]);
-        require(numTokens <= allowed[owner][msg.sender]);
+        require(amount <= balances[from]);
+        require(amount <= allowed[from][msg.sender]);
 
-        balances[owner] -= numTokens;
-        allowed[owner][msg.sender] -= numTokens;
-        balances[buyer] += numTokens;
-        emit Transfer(owner, buyer, numTokens);
+        balances[from] -= amount;
+        allowed[from][msg.sender] -= amount;
+        balances[to] += amount;
+        emit Transfer(from, to, amount);
         return true;
     }
 }
